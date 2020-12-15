@@ -10,7 +10,7 @@ func main() {
 
 	http.HandleFunc("/", mainPage)
 
-	port := ":9090"
+	port := ":8080"
 	println("Server listen on port", port)
 	err := http.ListenAndServe(port, nil)
 	if err != nil {

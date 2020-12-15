@@ -16,7 +16,15 @@ pipeline {
       steps {
         echo " ========================= start building image ==================="
         dir ('docker/toolbox') {
-          sh 'docker build . '
+          sh 'docker build -t go-app . '
+        }
+      }
+    }
+    stage("run docker") {
+      steps {
+        echo " ========================= run docker image ==================="
+        dir ('docker/toolbox') {
+          sh 'docker run --name=go-web-app -p 80:8080 go app'
         }
       }
     }
