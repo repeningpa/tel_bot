@@ -1,8 +1,8 @@
 #!groovy
 // Check localhost properties
-properies([disableConcurrentBuilds()])
+properties([disableConcurrentBuilds()])
 
-pipline {
+pipeline {
   agent {
     label 'master'
   }
