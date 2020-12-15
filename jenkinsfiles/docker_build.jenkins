@@ -24,7 +24,7 @@ pipeline {
       steps {
         echo " ========================= run docker image ==================="
         dir ('docker') {
-          sh 'docker run --name=go-web-app go app'
+          sh 'docker run -it --name go-web-app -p 80:8080'
         }
       }
     }
