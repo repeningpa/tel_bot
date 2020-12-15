@@ -1,0 +1,20 @@
+#!groovy
+// Check localhost properties
+properies([disableConcurrentBuilds()])
+
+pipline {
+  agent {
+    label 'master'
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    timestamps()
+  }
+  stages {
+    stage("First step") {
+      steps {
+        sh 'ssh root@127.0.0.1 \'hostname'\''
+      }
+    }
+  }
+}
