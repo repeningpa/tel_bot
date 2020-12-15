@@ -1,5 +1,5 @@
 FROM golang:latest
 
-COPY ../simpleWebServer/main ./build
+COPY ./ ./build
 RUN go build -o main .
-CMD ["../simpleWebServer/main"]
+CMD ["./main"]
