@@ -1,5 +1,5 @@
 FROM golang:latest
 
-COPY ././
+COPY ./ ./
 RUN go build -o main .
 CMD ["./main"]
