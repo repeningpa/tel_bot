@@ -21,6 +21,10 @@ func main() {
 	u.Timeout = 30
 	updates, err := bot.GetUpdatesChan(u)
 
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Меня пересобрали...")
+	// отправляем
+	bot.Send(msg)
+
 	// в канал updates прилетают структуры типа Update
 	// вычитываем их и обрабатываем
 	for update := range updates {
