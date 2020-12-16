@@ -40,7 +40,7 @@ pipeline {
       steps {
         echo " ========================= run docker image ==================="
         dir ('docker') {
-          sh 'docker run --name go-run-app go-web-app'
+          sh 'docker run --name main'
         }
       }
     }
