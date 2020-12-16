@@ -1,11 +1,9 @@
-FROM golang:latest
+FROM golang:latest 
 
-WORKDIR ./app
+RUN mkdir /app 
+ADD . /app/ 
 
-COPY . .
+WORKDIR /app 
 
-RUN go build -o main .
-
-EXPOSE 8080
-
-CMD ["./main"]
+RUN go build -o main . 
+CMD ["/app/main"]
