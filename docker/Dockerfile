@@ -1,9 +1,11 @@
-FROM golang:latest 
+FROM golang:1.9.2 
 
-RUN mkdir /app 
-ADD . /app/ 
+ADD . /go/src/app
 
-WORKDIR /app 
+WORKDIR /go/src/app
 
-RUN go build -o main ./docker 
-CMD ["/app/main"]
+RUN go get app
+
+RUN go install
+
+ENTRYPOINT ["/go/bin/app"]
