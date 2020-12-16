@@ -6,6 +6,7 @@ ADD . /app
 
 WORKDIR /app
 
+RUN apt install -y git
 RUN go get github.com/Syfaro/telegram-bot-api
 RUN go build -o main .
 
