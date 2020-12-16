@@ -43,6 +43,7 @@ func main() {
 		}
 
 		// создаем ответное сообщение
+
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
 		// отправляем
 		bot.Send(msg)
