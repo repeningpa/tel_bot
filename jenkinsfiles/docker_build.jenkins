@@ -33,7 +33,7 @@ pipeline {
       steps {
         echo " ========================= run docker image ==================="
         dir ('docker') {
-          sh 'rm build.tar.gz
+          sh 'rm build.tar.gz \
               docker run -d -i -t \
               --name main \
               main/main'
