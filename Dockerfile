@@ -6,6 +6,7 @@ ADD . /app
 
 WORKDIR /app
 
+RUN go get github.com/Syfaro/telegram-bot-api
 RUN go build -o main .
 
 CMD ["/app/main"]
