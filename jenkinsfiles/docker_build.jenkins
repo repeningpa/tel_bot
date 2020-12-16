@@ -16,7 +16,7 @@ pipeline {
       steps {
         echo " ========================= start building intermediate image ==================="
         dir ('docker') {
-          sh 'docker build -t main-build -f Dockerfile.build ./docker'
+          sh 'docker build -t main-build -f Dockerfile.build .'
         }
       }
     }
