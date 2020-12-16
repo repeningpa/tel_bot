@@ -1,9 +1,9 @@
-FROM golang:1.14
+FROM golang:latest
 
-WORKDIR /go/src/main
-COPY . .
+WORKDIR /app
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+COPY ./ /app
 
-CMD ["main"]
+RUN go mod download
+
+ENTRYPOINT go run go/src/main.go
