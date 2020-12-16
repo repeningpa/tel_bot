@@ -18,14 +18,14 @@ func main() {
 
 	// инициализируем канал, куда будут прилетать обновления от API
 	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
+	u.Timeout = 30
 	updates, err := bot.GetUpdatesChan(u)
 
 	// в канал updates прилетают структуры типа Update
 	// вычитываем их и обрабатываем
 	for update := range updates {
 		// универсальный ответ на любое сообщение
-		reply := "Не знаю что сказать"
+		reply := "Ты эт, не шуми тут..."
 		if update.Message == nil {
 			continue
 		}
@@ -36,10 +36,12 @@ func main() {
 		// свитч на обработку комманд
 		// комманда - сообщение, начинающееся с "/"
 		switch update.Message.Command() {
-		case "start":
-			reply = "Привет. Я телеграм-бот"
+		case "привет":
+			reply = "Пароль не верный."
 		case "hello":
 			reply = "world"
+		case "fendi":
+			reply = "FENDI GUCHI FLIP-FLOP"
 		}
 
 		// создаем ответное сообщение
