@@ -15,17 +15,13 @@ pipeline {
     stage("create docker image") {
       steps {
         echo " ========================= create docker image with app ==================="
-        dir ('docker') {
-          sh 'docker build -t my-go-app .'
-        }
+        sh 'docker build -t my-go-app .'
       }
     }
     stage("run docker") {
       steps {
         echo " ========================= run docker image ==================="
-        dir ('docker') {
-          sh 'docker run -p 8081:8081 -it my-go-app'
-        }
+        sh 'docker run -p 8081:8081 -it my-go-app'
       }
     }
   }
