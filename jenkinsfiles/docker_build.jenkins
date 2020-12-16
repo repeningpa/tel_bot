@@ -16,8 +16,15 @@ pipeline {
       steps {
         echo " ========================= start building intermediate image ==================="
         dir ('docker') {
-          sh 'docker build -t main-build -f Dockerfile.build /docker \
-              docker run main-build > build.tar.gz'
+          sh 'docker build -t main-build -f Dockerfile.build /docker'
+        }
+      }
+    }
+    stage("create TEST docker intermediate image") {
+      steps {
+        echo " ========================= start building intermediate image ==================="
+        dir ('docker') {
+          sh '    docker run main-build > build.tar.gz'
         }
       }
     }
