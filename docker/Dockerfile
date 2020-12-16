@@ -1,8 +1,9 @@
-FROM debian:latest
+FROM golang:1.14
 
-RUN mkdir -p /service
-WORKDIR /service
+WORKDIR /go/src/main
+COPY . .
 
-ADD ./build.tar.gz /service/
+RUN go get -d -v ./...
+RUN go install -v ./...
 
-CMD ./main
+CMD ["main"]

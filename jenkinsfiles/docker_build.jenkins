@@ -12,27 +12,27 @@ pipeline {
     timestamps()
   }
   stages {
-    stage("create docker intermediate image") {
-      steps {
-        echo " ========================= start building intermediate image ==================="
-        dir ('docker') {
-          sh 'docker build -t main-build -f Dockerfile.build .'
-        }
-      }
-    }
-    stage("create TEST docker intermediate image") {
-      steps {
-        echo " ========================= start building intermediate image ==================="
-        dir ('docker') {
-          sh '    docker run main-build > build.tar.gz'
-        }
-      }
-    }
+  //   stage("create docker intermediate image") {
+  //     steps {
+  //       echo " ========================= start building intermediate image ==================="
+  //       dir ('docker') {
+  //         sh 'docker build -t main-build -f Dockerfile.build .'
+  //       }
+  //     }
+  //   }
+  //   stage("create TEST docker intermediate image") {
+  //     steps {
+  //       echo " ========================= start building intermediate image ==================="
+  //       dir ('docker') {
+  //         sh '    docker run main-build > build.tar.gz'
+  //       }
+  //     }
+  //   }
     stage("create docker image") {
       steps {
         echo " ========================= create docker image with app ==================="
         dir ('docker') {
-          sh 'docker build -t main/main .'
+          sh 'docker build -t go-web-app .'
         }
       }
     }
@@ -40,10 +40,7 @@ pipeline {
       steps {
         echo " ========================= run docker image ==================="
         dir ('docker') {
-          sh 'rm build.tar.gz \
-              docker run -d -i -t \
-              --name main \
-              main/main'
+          sh 'docker run -it --main go-run-app go-web-app'
         }
       }
     }
