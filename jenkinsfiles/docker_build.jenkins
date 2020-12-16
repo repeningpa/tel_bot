@@ -14,7 +14,11 @@ pipeline {
   stages {
     stage("create docker image") {
       steps {
-        echo " ========================= create docker image with app ==================="
+        echo " ========================= delete run docker images ==================="
+        sh 'docker rm -f $(docker ps -a -q)'
+      }
+      steps {
+        echo " ========================= create docker image ==================="
         sh 'docker build -t my-go-app .'
       }
     }
