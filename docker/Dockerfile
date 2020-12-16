@@ -1,6 +1,6 @@
 FROM golang:latest
 
-WORKDIR /simpleWebServer
+WORKDIR /app
 
 COPY . .
 
