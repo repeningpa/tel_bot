@@ -28,5 +28,4 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 	js, _ := json.Marshal(user)
 
 	w.Write(js)
-
 }
