@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -49,7 +50,7 @@ func main() {
 func MakeRequest() {
 	message := map[string]interface{}{
 		"chat_id": "496818745",
-		"text": "Меня пересобрали..."
+		"text":    "Меня пересобрали...",
 	}
 
 	bytesRepresentation, err := json.Marshal(message)
