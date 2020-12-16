@@ -1,8 +1,8 @@
 FROM golang:1.9.2 
 
-ADD . /go/src/main
+ADD . /go/src/app
 
-WORKDIR /go/src/main
+WORKDIR /go/src/app
 
 RUN go get main
 
