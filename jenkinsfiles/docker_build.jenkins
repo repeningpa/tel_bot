@@ -12,11 +12,20 @@ pipeline {
     timestamps()
   }
   stages {
+    stage("create docker intermediate image") {
+      steps {
+        echo " ========================= start building intermediate image ==================="
+        dir ('docker') {
+          sh 'docker build -t main-build -f Dockerfile.build . \
+              docker run main-build > build.tar.gz'
+        }
+      }
+    }
     stage("create docker image") {
       steps {
-        echo " ========================= start building image ==================="
+        echo " ========================= create docker image with app ==================="
         dir ('docker') {
-          sh 'docker build -t go-web-app . '
+          sh 'docker build -t main/main .'
         }
       }
     }
@@ -24,7 +33,10 @@ pipeline {
       steps {
         echo " ========================= run docker image ==================="
         dir ('docker') {
-          sh 'docker run -it —name go-run-app go-web-app'
+          sh 'rm build.tar.gz
+              docker run -d -i -t \
+              --name main \
+              main/main'
         }
       }
     }

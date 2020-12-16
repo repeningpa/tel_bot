@@ -1,11 +1,8 @@
-FROM golang:1.9.2 
+FROM debian:latest
 
-ADD . /go/src/app
+RUN mkdir -p /service
+WORKDIR /service
 
-WORKDIR /go/src/app
+ADD ./build.tar.gz /service/
 
-RUN go get main
-
-RUN go install
-
-ENTRYPOINT ["/go/bin/main"]
+CMD ./main
