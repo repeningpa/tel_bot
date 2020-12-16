@@ -1,32 +1,49 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
-	"net/http"
+
+	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
 func main() {
-
-	http.HandleFunc("/", mainPage)
-
-	port := ":8081"
-	println("Server listen on port", port)
-	err := http.ListenAndServe(port, nil)
+	// подключаемся к боту с помощью токена
+	bot, err := tgbotapi.NewBotAPI("1409094275:AAFBP7Vm2D-soxzHIht9pYXACDLOiJDqLdM")
 	if err != nil {
-		log.Fatal("ListenAndServe", err)
+		log.Panic(err)
 	}
-}
 
-type User struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-}
+	bot.Debug = true
+	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-func mainPage(w http.ResponseWriter, r *http.Request) {
-	user := User{"Павел", "Репенинг"}
-	js, _ := json.Marshal(user)
+	// инициализируем канал, куда будут прилетать обновления от API
+	var ucfg tgbotapi.UpdateConfig = tgbotapi.NewUpdate(0)
+	ucfg.Timeout = 60
+	err = bot.UpdatesChan(ucfg)
+	// читаем обновления из канала
+	for {
+		select {
+		case update := <-bot.Updates:
+			// Пользователь, который написал боту
+			UserName := update.Message.From.UserName
 
-	w.Write(js)
+			// ID чата/диалога.
+			// Может быть идентификатором как чата с пользователем
+			// (тогда он равен UserID) так и публичного чата/канала
+			ChatID := update.Message.Chat.ID
 
+			// Текст сообщения
+			Text := update.Message.Text
+
+			log.Printf("[%s] %d %s", UserName, ChatID, Text)
+
+			// Ответим пользователю его же сообщением
+			reply := Text
+			// Созадаем сообщение
+			msg := tgbotapi.NewMessage(ChatID, reply)
+			// и отправляем его
+			bot.SendMessage(msg)
+		}
+
+	}
 }
