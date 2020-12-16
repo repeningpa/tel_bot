@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	tgbotapi "github.com/Syfaro/telegram-bot-api"
+	tgbotapi "/usr/local/go/src/github.com/Syfaro/telegram-bot-api"
 )
 
 func main() {
