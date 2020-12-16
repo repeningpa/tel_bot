@@ -21,7 +21,7 @@ pipeline {
     stage("run docker") {
       steps {
         echo " ========================= run docker image ==================="
-        sh 'docker run -t -p 8081:8081 my-go-app'
+        sh 'docker run -d -p 8081:8081 my-go-app'
       }
     }
   }
