@@ -32,7 +32,6 @@ func main() {
 			ChatID := update.Message.Chat.ID
 			// Текст сообщения
 			Text := update.Message.Text
-
 			log.Printf("[%s] %d %s", UserName, ChatID, Text)
 			// Ответим пользователю его же сообщением
 			reply := Text
