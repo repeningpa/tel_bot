@@ -47,7 +47,9 @@ func main() {
 	}
 }
 
+// MakeRequest is ...
 func MakeRequest() {
+
 	message := map[string]interface{}{
 		"chat_id": "496818745",
 		"text":    "Меня пересобрали...",
@@ -62,4 +64,11 @@ func MakeRequest() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	var result map[string]interface{}
+
+	json.NewDecoder(resp.Body).Decode(&result)
+
+	log.Println(result)
+	log.Println(result["data"])
 }
