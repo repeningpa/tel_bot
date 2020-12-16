@@ -30,7 +30,6 @@ func main() {
 			// Может быть идентификатором как чата с пользователем
 			// (тогда он равен UserID) так и публичного чата/канала
 			ChatID := update.Message.Chat.ID
-
 			// Текст сообщения
 			Text := update.Message.Text
 
