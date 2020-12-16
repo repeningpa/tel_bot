@@ -4,7 +4,7 @@ RUN mkdir -p /go/src/main
 WORKDIR /go/src/main
 ADD . /go/src/main
 
-RUN go get .
+RUN go get -d
 RUN go build
 
 CMD tar -czf - main
