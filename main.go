@@ -1,13 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"log"
+	"net/http"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
 func main() {
-	// подключаемся к боту с помощью токена
+
 	bot, err := tgbotapi.NewBotAPI("1409094275:AAFBP7Vm2D-soxzHIht9pYXACDLOiJDqLdM")
 	if err != nil {
 		log.Panic(err)
@@ -16,29 +18,20 @@ func main() {
 	bot.Debug = true
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	// инициализируем канал, куда будут прилетать обновления от API
+	MakeRequest()
+
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 30
 	updates, err := bot.GetUpdatesChan(u)
 
-	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Меня пересобрали...")
-	// отправляем
-	bot.Send(msg)
-
-	// в канал updates прилетают структуры типа Update
-	// вычитываем их и обрабатываем
 	for update := range updates {
-		// универсальный ответ на любое сообщение
 		reply := "Ты эт, не шуми тут..."
 		if update.Message == nil {
 			continue
 		}
 
-		// логируем от кого какое сообщение пришло
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-		// свитч на обработку комманд
-		// комманда - сообщение, начинающееся с "/"
 		switch update.Message.Command() {
 		case "привет":
 			reply = "Пароль не верный."
@@ -48,10 +41,24 @@ func main() {
 			reply = "FENDI GUCHI FLIP-FLOP"
 		}
 
-		// создаем ответное сообщение
-
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
-		// отправляем
 		bot.Send(msg)
+	}
+}
+
+func MakeRequest() {
+	message := map[string]interface{}{
+		"chat_id": "496818745",
+		"text": "Меня пересобрали..."
+	}
+
+	bytesRepresentation, err := json.Marshal(message)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	resp, err := http.Post("https://api.telegram.org/bot1409094275:AAFBP7Vm2D-soxzHIht9pYXACDLOiJDqLdM/sendMessage", "application/json", bytes.NewBuffer(bytesRepresentation))
+	if err != nil {
+		log.Fatalln(err)
 	}
 }
