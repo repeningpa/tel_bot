@@ -1,20 +1,30 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 func main() {
-	r := mux.NewRouter()
 
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Welcome to this life-changing API.")
-	})
+	http.HandleFunc("/", mainPage)
 
-	fmt.Println("Server listening!")
-	http.ListenAndServe(":80", r)
+	// port := ":8081"
+	// println("Server listen on port", port)
+	// err := http.ListenAndServe(port, nil)
+	// if err != nil {
+	// 	log.Fatal("ListenAndServe", err)
+	// }
+}
 
+type User struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+}
+
+func mainPage(w http.ResponseWriter, r *http.Request) {
+	user := User{"Павел", "Репенинг"}
+	js, _ := json.Marshal(user)
+
+	w.Write(js)
 }
