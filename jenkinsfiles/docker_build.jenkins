@@ -12,11 +12,13 @@ pipeline {
     timestamps()
   }
   stages {
-    stage("create docker image") {
+    stage("delete docker") {
       steps {
         echo " ========================= delete run docker images ==================="
         sh 'docker rm -f $(docker ps -a -q)'
       }
+    }
+    stage("create docker image") {
       steps {
         echo " ========================= create docker image ==================="
         sh 'docker build -t my-go-app .'
