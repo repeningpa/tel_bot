@@ -107,6 +107,7 @@ func GetToken(database *sql.DB) (token string) {
 
 //SendMessage ...
 func SendMessage(bot *tgbotapi.BotAPI) {
+
 	person := GetPerson(database)
 
 	arrChatID := make([]int, 0)
