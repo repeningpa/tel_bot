@@ -30,5 +30,4 @@ func connectdb() (database *sql.DB) {
 	defer db.Close()
 
 	return database
-
 }
