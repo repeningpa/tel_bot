@@ -95,7 +95,7 @@ func GetPerson(database *sql.DB) (per []*Person) {
 	return per
 }
 
-//GetToken ...
+//GetToken ...wadawd
 func GetToken(database *sql.DB) (token string) {
 	err := database.QueryRow("select token from tg_main").Scan(&token)
 	if err != nil {
