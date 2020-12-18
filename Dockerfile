@@ -6,12 +6,10 @@ ADD . /app
 
 WORKDIR /app
 
-# COPY . ./app
-
-# RUN apt-get update
-# RUN apt-get install -y git
+RUN apt-get update
+RUN apt-get install -y git
 RUN go get github.com/Syfaro/telegram-bot-api
-RUN go get github.com/lib/pq
+RUN go get github.com/lib/pq 
 RUN go build -o main .
 
 CMD ["/app/main"]
