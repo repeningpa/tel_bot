@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
+	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,7 +12,33 @@ import (
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
+//Person ...
+type Person struct {
+	chatID int
+}
+
+//Token ...
+type Token struct {
+	token int
+}
+
+var database *sql.DB
+
 func main() {
+
+	db, err := sql.Open("postgres", "postres: @/tg_bot")
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	database = db
+	defer db.Close()
+
+	person := GetPerson()
+	for _, pe := range person {
+		fmt.Println(pe.chatID)
+	}
 
 	bot, err := tgbotapi.NewBotAPI("1409094275:AAFBP7Vm2D-soxzHIht9pYXACDLOiJDqLdM")
 	if err != nil {
@@ -76,3 +104,54 @@ func main() {
 		bot.Send(msg)
 	}
 }
+
+//GetPerson ...
+func GetPerson() (per []*Person) {
+
+	rows, err := database.Query("select * from rg_bot.person")
+	if err != nil {
+		log.Println(err)
+	}
+	defer rows.Close()
+	// person = []Person{}
+
+	per = make([]*Person, 0)
+	for rows.Next() {
+		pe := new(Person)
+		err := rows.Scan(&pe.chatID)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		per = append(per, pe)
+	}
+
+	// for _, pe := range per {
+	// 	fmt.Println(pe.chatID)
+	// }
+
+	return per
+}
+
+// //GetToken ...
+// func GetToken() {
+
+// 	rows, err := database.Query("select * from rg_bot.tg_main")
+// 	if err != nil {
+// 		log.Println(err)
+// 	}
+// 	defer rows.Close()
+// 	token := []Token{}
+
+// 	for rows.Next() {
+// 		p := Token{}
+// 		err := rows.Scan(&p.token)
+// 		if err != nil {
+// 			fmt.Println(err)
+// 			continue
+// 		}
+// 		token = append(token, p)
+// 	}
+
+// 	return token
+// }
